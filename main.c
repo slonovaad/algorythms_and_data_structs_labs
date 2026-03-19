@@ -19,9 +19,13 @@ typedef struct Tree {
 Node* create_node(int value, int id) 
 {
     Node* new_node = (Node*)malloc(sizeof(Node));
-    if (!new_node) exit(1);
+    if (!new_node) {
+        return 1;
+    }
     new_node->subtrees = (Node**)malloc(sizeof(Node*) * MAX_WIDTH);
-    if (!new_node->subtrees) exit(1);
+    if (!new_node->subtrees) {
+        return 1;
+    }
     new_node->data = value;
     new_node->count_subtrees = 0;
     new_node->id = id;
@@ -32,9 +36,13 @@ Node* create_node(int value, int id)
 Tree* init_tree()
 {
     Tree* tree = (Tree*)malloc(sizeof(Tree));
-    if (!tree) exit(1);
+    if (!tree) {
+        return 1;
+    }
     tree->nodes = (Node**)malloc(sizeof(Node*) * MAX_NODE_COUNT);
-    if (!tree->nodes) exit(1);
+    if (!tree->nodes) {
+        return 1;
+    }
     tree->count_nodes = 0;
     return tree;
 }
