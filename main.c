@@ -209,14 +209,12 @@ int main(void) {
         for (int i = 0; i < count_words; i++) {
             keys_3[i] = rand() % count_words;
         }
-        //вывод таблицы
         printf("---table1---\n");
         printf("before sort:\n");
         print_table(keys_1, words_1, count_words);
         shaker_sort(count_words, keys_1, words_1);
         printf("\nafter sort:\n");
         print_table(keys_1, words_1, count_words);
-        //вывод таблицы, ввод ключа, бинсерч
 
         int x, ind;
         printf("enter key for search:\n");
