@@ -635,6 +635,8 @@ int fractions_to_one_floor(TreeNode* root) {
 
     Word* multiply = NULL;
     int need_delete_left_op = 0, need_delete_right_op = 0;
+    int left_numerator_transferred = 0, left_denumerator_transferred = 0;
+    int right_numerator_transferred = 0, right_denumerator_transferred = 0;
 
     if (root->data->data[0] == '*') {
         if (left_copy->data->data[0] == '/') {
@@ -678,49 +680,81 @@ int fractions_to_one_floor(TreeNode* root) {
         }
         new_numerator->left = left_numerator;
         new_numerator->right = right_numerator;
+        left_numerator_transferred = 1;
+        right_numerator_transferred = 1;
 
         if (left_denumerator != NULL && right_denumerator == NULL) {
             new_denumerator = left_denumerator;
+            left_denumerator_transferred = 1;
         } else if (left_denumerator == NULL && right_denumerator != NULL) {
             new_denumerator = right_denumerator;
+            right_denumerator_transferred = 1;
         } else {
             multiply = init_Word();
             if (multiply == NULL) {
                 delete_TreeNode(new_numerator);
-                delete_TreeNode(left_copy);
-                delete_TreeNode(right_copy);
+                if (need_delete_left_op && left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+                if (need_delete_right_op && right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
                 return 1;
             }
             if (add_char_Word(multiply, '*')) {
                 delete_TreeNode(new_numerator);
-                delete_TreeNode(left_copy);
-                delete_TreeNode(right_copy);
+                if (need_delete_left_op && left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+                if (need_delete_right_op && right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
                 return 1;
             }
             new_denumerator = init_TreeNode(multiply);
             if (new_denumerator == NULL) {
                 delete_Word(multiply);
                 delete_TreeNode(new_numerator);
-                delete_TreeNode(left_copy);
-                delete_TreeNode(right_copy);
+                if (need_delete_left_op && left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+                if (need_delete_right_op && right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
                 return 1;
             }
             new_denumerator->left = left_denumerator;
             new_denumerator->right = right_denumerator;
+            left_denumerator_transferred = 1;
+            right_denumerator_transferred = 1;
         }
         Word* division = init_Word();
         if (division == NULL) {
             delete_TreeNode(new_numerator);
             if (new_denumerator != left_denumerator && new_denumerator != right_denumerator) delete_TreeNode(new_denumerator);
-            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+            if (need_delete_left_op) {
+                if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+            } else {
+                delete_TreeNode(left_copy);
+            }
+            if (need_delete_right_op) {
+                if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
+            } else {
+                delete_TreeNode(right_copy);
+            }
             return 1;
         }
         if (add_char_Word(division, '/')) {
             delete_TreeNode(new_numerator);
             if (new_denumerator != left_denumerator && new_denumerator != right_denumerator) delete_TreeNode(new_denumerator);
-            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+            if (need_delete_left_op) {
+                if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+            } else {
+                delete_TreeNode(left_copy);
+            }
+            if (need_delete_right_op) {
+                if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
+            } else {
+                delete_TreeNode(right_copy);
+            }
             return 1;
         }
         delete_Word(root->data);
@@ -777,52 +811,108 @@ int fractions_to_one_floor(TreeNode* root) {
         new_numerator->left = left_numerator;
         new_numerator->right = right_denumerator;
         new_num_created = 1;
+        left_numerator_transferred = 1;
+        right_denumerator_transferred = 1;
     }
     else {
         new_numerator = left_numerator;
+        left_numerator_transferred = 1;
     }
     if (left_denumerator != NULL) {
         multiply = init_Word();
         if (multiply == NULL) {
             if (new_num_created) delete_TreeNode(new_numerator);
-            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+            if (need_delete_left_op) {
+                if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+            } else {
+                delete_TreeNode(left_copy);
+            }
+            if (need_delete_right_op) {
+                if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
+            } else {
+                delete_TreeNode(right_copy);
+            }
             return 1;
         }
         if (add_char_Word(multiply, '*')) {
             if (new_num_created) delete_TreeNode(new_numerator);
-            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+            if (need_delete_left_op) {
+                if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+            } else {
+                delete_TreeNode(left_copy);
+            }
+            if (need_delete_right_op) {
+                if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
+            } else {
+                delete_TreeNode(right_copy);
+            }
             return 1;
         }
         new_denumerator = init_TreeNode(multiply);
         if (new_denumerator == NULL) {
             delete_Word(multiply);
             if (new_num_created) delete_TreeNode(new_numerator);
-            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+            if (need_delete_left_op) {
+                if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+                else delete_TreeNode(left_copy);
+            } else {
+                delete_TreeNode(left_copy);
+            }
+            if (need_delete_right_op) {
+                if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+                else delete_TreeNode(right_copy);
+            } else {
+                delete_TreeNode(right_copy);
+            }
             return 1;
         }
         new_denumerator->left = left_denumerator;
         new_denumerator->right = right_numerator;
         new_den_created = 1;
+        left_denumerator_transferred = 1;
+        right_numerator_transferred = 1;
     }
     else {
         new_denumerator = right_numerator;
+        right_numerator_transferred = 1;
     }
     Word* division = init_Word();
     if (division == NULL) {
         if (new_num_created) delete_TreeNode(new_numerator);
         if (new_den_created) delete_TreeNode(new_denumerator);
-        if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-        if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+        if (need_delete_left_op) {
+            if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+            else delete_TreeNode(left_copy);
+        } else {
+            delete_TreeNode(left_copy);
+        }
+        if (need_delete_right_op) {
+            if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+            else delete_TreeNode(right_copy);
+        } else {
+            delete_TreeNode(right_copy);
+        }
         return 1;
     }
     if (add_char_Word(division, '/')) {
         if (new_num_created) delete_TreeNode(new_numerator);
         if (new_den_created) delete_TreeNode(new_denumerator);
-        if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
-        if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
+        if (need_delete_left_op) {
+            if (left_numerator_transferred && left_denumerator_transferred) delete_TreeNode_no_childrens(left_copy);
+            else delete_TreeNode(left_copy);
+        } else {
+            delete_TreeNode(left_copy);
+        }
+        if (need_delete_right_op) {
+            if (right_numerator_transferred && right_denumerator_transferred) delete_TreeNode_no_childrens(right_copy);
+            else delete_TreeNode(right_copy);
+        } else {
+            delete_TreeNode(right_copy);
+        }
         return 1;
     }
     delete_Word(root->data);
