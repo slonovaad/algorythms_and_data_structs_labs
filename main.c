@@ -712,15 +712,15 @@ int fractions_to_one_floor(TreeNode* root) {
         if (division == NULL) {
             delete_TreeNode(new_numerator);
             if (new_denumerator != left_denumerator && new_denumerator != right_denumerator) delete_TreeNode(new_denumerator);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         if (add_char_Word(division, '/')) {
             delete_TreeNode(new_numerator);
             if (new_denumerator != left_denumerator && new_denumerator != right_denumerator) delete_TreeNode(new_denumerator);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         delete_Word(root->data);
@@ -758,20 +758,20 @@ int fractions_to_one_floor(TreeNode* root) {
     if (right_denumerator != NULL) {
         multiply = init_Word();
         if (multiply == NULL) {
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         if (add_char_Word(multiply, '*')) {
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         new_numerator = init_TreeNode(multiply);
         if (new_numerator == NULL) {
             delete_Word(multiply);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         new_numerator->left = left_numerator;
@@ -785,22 +785,22 @@ int fractions_to_one_floor(TreeNode* root) {
         multiply = init_Word();
         if (multiply == NULL) {
             if (new_num_created) delete_TreeNode(new_numerator);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         if (add_char_Word(multiply, '*')) {
             if (new_num_created) delete_TreeNode(new_numerator);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         new_denumerator = init_TreeNode(multiply);
         if (new_denumerator == NULL) {
             delete_Word(multiply);
             if (new_num_created) delete_TreeNode(new_numerator);
-            delete_TreeNode(left_copy);
-            delete_TreeNode(right_copy);
+            if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+            if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
             return 1;
         }
         new_denumerator->left = left_denumerator;
@@ -814,15 +814,15 @@ int fractions_to_one_floor(TreeNode* root) {
     if (division == NULL) {
         if (new_num_created) delete_TreeNode(new_numerator);
         if (new_den_created) delete_TreeNode(new_denumerator);
-        delete_TreeNode(left_copy);
-        delete_TreeNode(right_copy);
+        if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+        if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
         return 1;
     }
     if (add_char_Word(division, '/')) {
         if (new_num_created) delete_TreeNode(new_numerator);
         if (new_den_created) delete_TreeNode(new_denumerator);
-        delete_TreeNode(left_copy);
-        delete_TreeNode(right_copy);
+        if (need_delete_left_op) delete_TreeNode_no_childrens(left_copy); else delete_TreeNode(left_copy);
+        if (need_delete_right_op) delete_TreeNode_no_childrens(right_copy); else delete_TreeNode(right_copy);
         return 1;
     }
     delete_Word(root->data);
