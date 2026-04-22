@@ -1,0 +1,19 @@
+1 a 1.1
+4 a
+1 bc 2.2
+3
+1 def 3.3
+2 a
+4 a
+1 ghij 4.4
+2 bc
+4 bc
+1 klmno 5.5
+3
+2 def
+4 def
+2 ghij
+4 ghij
+2 klmno
+3
+0
