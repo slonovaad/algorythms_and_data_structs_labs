@@ -1,0 +1,63 @@
+1 a 1.1
+1 bc 2.2
+1 def 3.3
+1 ghij 4.4
+1 klmno 5.5
+1 p 6.6
+3
+2 a
+4 a
+1 qrs 7.7
+1 tuvw 8.8
+3
+2 bc
+1 xyz 9.9
+1 abcd 10.1
+4 def
+2 def
+4 def
+1 efgh 11.2
+1 ijklm 12.3
+1 nop 13.4
+1 qrstu 14.5
+1 vw 15.6
+1 xyzab 16.7
+3
+2 ghij
+4 ghij
+1 cdefg 17.8
+1 hij 18.9
+1 klmn 19.0
+1 opqr 20.1
+1 st 21.2
+1 uv 22.3
+1 wx 23.4
+1 yz 24.5
+1 zzzz 25.6
+3
+4 klmno
+2 klmno
+2 p
+2 qrs
+2 tuvw
+4 tuvw
+2 xyz
+2 abcd
+2 efgh
+2 ijklm
+2 nop
+2 qrstu
+2 vw
+2 xyzab
+2 cdefg
+2 hij
+2 klmn
+2 opqr
+2 st
+2 uv
+2 wx
+2 yz
+2 zzzz
+4 last
+3
+0
